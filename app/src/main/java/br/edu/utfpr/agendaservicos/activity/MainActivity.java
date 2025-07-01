@@ -10,6 +10,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import br.edu.utfpr.agendaservicos.R;
 
+import android.content.Intent;
+import android.widget.Button;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,6 +20,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        // Código para o botão "Tipos de serviço"
+        Button buttonAbrirTipos = findViewById(R.id.buttonAbrirTipos);
+        buttonAbrirTipos.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ServicoTipoActivity.class);
+            startActivity(intent);
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
