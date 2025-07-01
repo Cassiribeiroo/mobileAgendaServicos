@@ -28,6 +28,7 @@ public class ServicoTipoActivity extends AppCompatActivity{
     private ServicoTipoDao servicoTipoDao;
     private ArrayAdapter<String> adapter;
     private List<ServicoTipo> listaServicos;
+    private int editandoId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,34 @@ public class ServicoTipoActivity extends AppCompatActivity{
         // Carrega e exibe a lista
         atualizarLista();
 
+        // Clique curto para editar
+        listViewServicos.setOnItemClickListener((parent, view, position, id) -> {
+            ServicoTipo servico = listaServicos.get(position);
+            editTextNome.setText(servico.getNome());
+            editTextUnidade.setText(servico.getUnidade());
+            editTextValor.setText(String.valueOf(servico.getValor()));
+            editandoId = servico.getId();
+        });
+
+        // Clique longo para excluir
+        listViewServicos.setOnItemLongClickListener((parent, view, position, id) -> {
+            ServicoTipo servico = listaServicos.get(position);
+
+            new android.app.AlertDialog.Builder(this)
+                    .setTitle("Confirmar exclusão")
+                    .setMessage("Deseja realmente excluir o serviço \"" + servico.getNome() + "\"?")
+                    .setPositiveButton("Sim", (dialog, which) -> {
+                        servicoTipoDao.excluir(servico);
+                        Toast.makeText(this, "Serviço \"" + servico.getNome() + "\" excluído", Toast.LENGTH_SHORT).show();
+                        atualizarLista();
+                    })
+                    .setNegativeButton("Cancelar", null)
+                    .show();
+
+            return true;
+        });
+
+
         // Ação do botão Salvar
         buttonSalvar.setOnClickListener(v -> salvarServico());
     }
@@ -76,9 +105,18 @@ public class ServicoTipoActivity extends AppCompatActivity{
         }
 
         ServicoTipo servico = new ServicoTipo(nome, unidade, valor);
-        servicoTipoDao.inserir(servico);
 
-        Toast.makeText(this, "Serviço salvo com sucesso", Toast.LENGTH_SHORT).show();
+        if (editandoId == -1) {
+            // Novo serviço
+            servicoTipoDao.inserir(servico);
+            Toast.makeText(this, "Serviço salvo com sucesso", Toast.LENGTH_SHORT).show();
+        } else {
+            // Atualização
+            servico.setId(editandoId);
+            servicoTipoDao.atualizar(servico);
+            Toast.makeText(this, "Serviço atualizado com sucesso", Toast.LENGTH_SHORT).show();
+            editandoId = -1; // Resetar após edição
+        }
 
         // Limpa os campos
         editTextNome.setText("");
