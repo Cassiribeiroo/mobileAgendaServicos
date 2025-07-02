@@ -22,10 +22,10 @@ public interface ServicoTipoDao {
     @Delete
     void excluir(ServicoTipo servicoTipo);
 
-    @Query("SELECT * FROM ServicoTipo ORDER BY nome ASC")
+    @Query("SELECT * FROM servicoTipo ORDER BY nome ASC")
     List<ServicoTipo> listarTodos();
 
-    @Query("SELECT * FROM ServicoTipo WHERE id = :id")
+    @Query("SELECT * FROM servicoTipo WHERE id = :id")
     ServicoTipo buscarPorId(int id);
 
 }

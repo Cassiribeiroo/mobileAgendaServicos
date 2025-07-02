@@ -3,7 +3,7 @@ package br.edu.utfpr.agendaservicos.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "servicoTipo")
 public class ServicoTipo {
 
     @PrimaryKey(autoGenerate = true)

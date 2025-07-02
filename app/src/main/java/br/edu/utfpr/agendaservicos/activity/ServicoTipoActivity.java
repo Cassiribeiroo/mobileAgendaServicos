@@ -58,8 +58,10 @@ public class ServicoTipoActivity extends AppCompatActivity{
 
         // Inicializa o banco de dados e o DAO
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class,
-                "servicos-db").allowMainThreadQueries().build();
+                        AppDatabase.class, "servicos-db")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
 
         servicoTipoDao = db.servicoTipoDao();
 
