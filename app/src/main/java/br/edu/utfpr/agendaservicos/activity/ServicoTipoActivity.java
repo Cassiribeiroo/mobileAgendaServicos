@@ -1,6 +1,8 @@
 package br.edu.utfpr.agendaservicos.activity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,6 +20,9 @@ import br.edu.utfpr.agendaservicos.database.AppDatabase;
 import br.edu.utfpr.agendaservicos.model.ServicoTipo;
 import br.edu.utfpr.agendaservicos.dao.ServicoTipoDao;
 
+import androidx.appcompat.widget.Toolbar;
+
+
 public class ServicoTipoActivity extends AppCompatActivity{
 
     private EditText editTextNome, editTextUnidade, editTextValor;
@@ -34,6 +39,13 @@ public class ServicoTipoActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servico_tipo);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Habilita botão de voltar (←)
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         // Liga os componentes do layout
         editTextNome = findViewById(R.id.editTextNome);
@@ -84,6 +96,34 @@ public class ServicoTipoActivity extends AppCompatActivity{
 
         // Ação do botão Salvar
         buttonSalvar.setOnClickListener(v -> salvarServico());
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish(); // Fecha a Activity
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu); // ou o nome do seu menu
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menu_tipos) {
+            // Já está na tela de tipos
+            return true;
+        } else if (id == R.id.menu_agendamentos) {
+            // Ainda será implementado
+            Toast.makeText(this, "Agendamentos em construção", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void salvarServico() {

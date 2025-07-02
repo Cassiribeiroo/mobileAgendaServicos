@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">AgendaServicos</string>
+    <string name="app_name">Agenda de Serviços</string>
+    <string name="menu_agendamentos">Agendamentos</string>
+    <string name="menu_tipos">Tipos de Serviço</string>
 </resources>

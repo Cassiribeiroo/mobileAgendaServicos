@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutServicoTipo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
+
+    <!-- Toolbar personalizada -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/black2"
+        app:title="Tipos de Serviço"
+        app:titleTextColor="@android:color/white"
+        android:theme="@style/ToolbarIconWhite"
+        app:popupTheme="@style/ToolbarIconWhite" />
 
     <EditText
         android:id="@+id/editTextNome"
